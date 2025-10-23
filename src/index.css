@@ -13,6 +13,12 @@
     background: linear-gradient(135deg, #0000CC 0%, #0033FF 100%);
     min-height: 100vh;
     color: #ffffff;
+    transition: background-color 0.3s ease;
+  }
+
+  /* Dark mode styles */
+  .dark body {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   }
 }
 
@@ -81,6 +87,12 @@
   .card:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Dark mode card styles */
+  .dark .card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
   }
 
   .input-field {

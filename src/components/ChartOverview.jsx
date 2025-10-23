@@ -18,7 +18,7 @@ const ChartOverview = ({ transactions }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Pie Chart - Category Expenses */}
-      <div className="card">
+      <div className="card bg-white/10 dark:bg-gray-800/50">
         <h3 className="text-2xl font-bold mb-6 text-white text-center">🥧 Pengeluaran per Kategori</h3>
         {categoryData.length > 0 ? (
           <ResponsiveContainer width="100%" height={350}>
@@ -52,13 +52,13 @@ const ChartOverview = ({ transactions }) => {
           </ResponsiveContainer>
         ) : (
           <div className="text-center py-16">
-            <p className="text-white/70 text-lg">Belum ada data pengeluaran</p>
+            <p className="text-white/70 dark:text-gray-300 text-lg">Belum ada data pengeluaran</p>
           </div>
         )}
       </div>
 
       {/* Bar Chart - Weekly Expenses */}
-      <div className="card">
+      <div className="card bg-white/10 dark:bg-gray-800/50">
         <h3 className="text-2xl font-bold mb-6 text-white text-center">📊 Pengeluaran Mingguan</h3>
         {weeklyData.length > 0 ? (
           <ResponsiveContainer width="100%" height={350}>
@@ -96,7 +96,7 @@ const ChartOverview = ({ transactions }) => {
           </ResponsiveContainer>
         ) : (
           <div className="text-center py-16">
-            <p className="text-white/70 text-lg">Belum ada data pengeluaran mingguan</p>
+            <p className="text-white/70 dark:text-gray-300 text-lg">Belum ada data pengeluaran mingguan</p>
           </div>
         )}
       </div>

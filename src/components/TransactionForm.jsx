@@ -45,7 +45,7 @@ const TransactionForm = () => {
   };
 
   return (
-    <div className="card mb-8">
+    <div className="card bg-white/10 dark:bg-gray-800/50 mb-8">
       <h2 className="text-2xl font-bold mb-6 text-white">➕ Tambah Transaksi</h2>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

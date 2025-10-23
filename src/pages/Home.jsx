@@ -13,7 +13,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="text-center mb-12">
           <h1 className="text-6xl font-bold text-white mb-4 text-shadow">💰 Catatan Keuangan Harian</h1>

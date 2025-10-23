@@ -1,26 +1,50 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { TransactionProvider } from './context/TransactionContext';
 import Navbar from './components/Navbar';
+import Login from './pages/Login';
 import Home from './pages/Home';
 import AddTransaction from './pages/AddTransaction';
 import Report from './pages/Report';
 import Settings from './pages/Settings';
 
+function AppContent() {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Login />;
+  }
+
+  return (
+    <div className="min-h-screen">
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/add" element={<AddTransaction />} />
+        <Route path="/report" element={<Report />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
+    </div>
+  );
+}
+
 function App() {
   return (
-    <TransactionProvider>
-      <Router>
-        <div className="min-h-screen">
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/add" element={<AddTransaction />} />
-            <Route path="/report" element={<Report />} />
-            <Route path="/settings" element={<Settings />} />
-          </Routes>
-        </div>
-      </Router>
-    </TransactionProvider>
+    <AuthProvider>
+      <TransactionProvider>
+        <Router>
+          <AppContent />
+        </Router>
+      </TransactionProvider>
+    </AuthProvider>
   );
 }
 

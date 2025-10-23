@@ -40,7 +40,7 @@ const Report = () => {
   };
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-12 bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="mb-12">
           <h1 className="text-5xl font-bold text-white mb-4 text-shadow">📊 Laporan Keuangan</h1>
@@ -48,7 +48,7 @@ const Report = () => {
         </div>
 
         {/* Filters */}
-        <div className="card mb-8">
+        <div className="card bg-white/10 dark:bg-gray-800/50 mb-8">
           <div className="flex flex-wrap gap-6 items-end">
             <div>
               <label className="block text-sm font-medium mb-2 text-white">Bulan</label>
@@ -80,11 +80,11 @@ const Report = () => {
           </div>
         </div>
 
-        {/* Transaction List */}
-        <div className="card overflow-hidden">
+        {/* Transaction Table */}
+        <div className="card bg-white/10 dark:bg-gray-800/50 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
-              <thead className="bg-white/10">
+              <thead className="bg-white/10 dark:bg-gray-700/50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Tanggal</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-white uppercase tracking-wider">Jenis</th>
@@ -94,9 +94,9 @@ const Report = () => {
                   <th className="px-6 py-3 text-center text-xs font-medium text-white uppercase tracking-wider">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/10">
+              <tbody className="divide-y divide-white/10 dark:divide-gray-600/30">
                 {filteredTransactions.map((transaction) => (
-                  <tr key={transaction.id} className="hover:bg-white/5">
+                  <tr key={transaction.id} className="hover:bg-white/5 dark:hover:bg-gray-700/20">
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-white">
                       {formatDate(transaction.date)}
                     </td>
@@ -134,7 +134,7 @@ const Report = () => {
 
           {filteredTransactions.length === 0 && (
             <div className="text-center py-12">
-              <p className="text-white/70">Tidak ada transaksi untuk periode ini</p>
+              <p className="text-white/70 dark:text-gray-300 text-lg">Tidak ada transaksi untuk periode ini</p>
             </div>
           )}
         </div>

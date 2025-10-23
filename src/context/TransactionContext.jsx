@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { supabase } from '../services/supabase';
+import { useAuth } from './AuthContext';
 
 const TransactionContext = createContext();
 
@@ -12,20 +13,28 @@ export const useTransactions = () => {
 };
 
 export const TransactionProvider = ({ children }) => {
+  const { user } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch transactions from Supabase
+  // Fetch transactions from Supabase for current user
   useEffect(() => {
-    fetchTransactions();
+    if (user) {
+      fetchTransactions();
+    }
+  }, [user]);
 
-    // Subscribe to real-time changes
+  // Subscribe to real-time changes for current user
+  useEffect(() => {
+    if (!user) return;
+
     const channel = supabase
-      .channel('transactions')
+      .channel(`transactions-${user.id}`)
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
-        table: 'transactions'
+        table: 'transactions',
+        filter: `user_id=eq.${user.id}`
       }, (payload) => {
         console.log('Change received!', payload);
         fetchTransactions(); // Refetch data on any change
@@ -35,13 +44,16 @@ export const TransactionProvider = ({ children }) => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, []);
+  }, [user]);
 
   const fetchTransactions = async () => {
+    if (!user) return;
+
     try {
       const { data, error } = await supabase
         .from('transactions')
         .select('*')
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error) throw error;
@@ -55,10 +67,17 @@ export const TransactionProvider = ({ children }) => {
 
   // Add transaction
   const addTransaction = async (transaction) => {
+    if (!user) return;
+
     try {
+      const transactionWithUser = {
+        ...transaction,
+        user_id: user.id
+      };
+
       const { data, error } = await supabase
         .from('transactions')
-        .insert([transaction])
+        .insert([transactionWithUser])
         .select();
 
       if (error) throw error;
