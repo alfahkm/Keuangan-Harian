@@ -46,11 +46,11 @@ const TransactionForm = () => {
 
   return (
     <div className="card bg-white/10 dark:bg-gray-800/50 mb-8">
-      <h2 className="text-2xl font-bold mb-6 text-white">➕ Tambah Transaksi</h2>
+      <h2 className="text-2xl font-bold mb-6 text-custom-blue">➕ Tambah Transaksi</h2>
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium mb-2 text-white">Jenis Transaksi</label>
+            <label className="block text-sm font-medium mb-2 text-custom-blue">Jenis Transaksi</label>
             <div className="flex gap-4">
               <label className="flex items-center">
                 <input
@@ -62,7 +62,7 @@ const TransactionForm = () => {
                   className="mr-2"
                   required
                 />
-                <span className="text-white">💰 Pemasukan</span>
+                <span className="text-custom-blue">💰 Pemasukan</span>
               </label>
               <label className="flex items-center">
                 <input
@@ -74,12 +74,12 @@ const TransactionForm = () => {
                   className="mr-2"
                   required
                 />
-                <span className="text-white">💸 Pengeluaran</span>
+                <span className="text-custom-blue">💸 Pengeluaran</span>
               </label>
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2 text-white">Nominal</label>
+            <label className="block text-sm font-medium mb-2 text-custom-blue">Nominal</label>
             <input
               type="number"
               name="amount"
@@ -93,7 +93,7 @@ const TransactionForm = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2 text-white">Deskripsi</label>
+            <label className="block text-sm font-medium mb-2 text-custom-blue">Deskripsi</label>
             <input
               type="text"
               name="description"
@@ -105,7 +105,7 @@ const TransactionForm = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2 text-white">Kategori</label>
+            <label className="block text-sm font-medium mb-2 text-custom-blue">Kategori</label>
             <input
               type="text"
               name="category"
@@ -117,7 +117,7 @@ const TransactionForm = () => {
             />
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-2 text-white">Tanggal</label>
+            <label className="block text-sm font-medium mb-2 text-custom-blue">Tanggal</label>
             <input
               type="date"
               name="date"

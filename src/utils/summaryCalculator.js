@@ -31,8 +31,20 @@ export const calculateWeeklyExpenses = (transactions) => {
   transactions
     .filter(t => t.type === 'expense')
     .forEach(t => {
-      const week = getWeekNumber(t.date);
-      weeklyData[week] = (weeklyData[week] || 0) + t.amount;
+      const date = new Date(t.date);
+      const weekStart = new Date(date);
+      weekStart.setDate(date.getDate() - date.getDay()); // Start of week (Sunday)
+      const weekEnd = new Date(weekStart);
+      weekEnd.setDate(weekStart.getDate() + 6); // End of week (Saturday)
+
+      // Create week key as "DD/MM - DD/MM"
+      const startDay = weekStart.getDate().toString().padStart(2, '0');
+      const startMonth = (weekStart.getMonth() + 1).toString().padStart(2, '0');
+      const endDay = weekEnd.getDate().toString().padStart(2, '0');
+      const endMonth = (weekEnd.getMonth() + 1).toString().padStart(2, '0');
+
+      const weekKey = `${startDay}/${startMonth} - ${endDay}/${endMonth}`;
+      weeklyData[weekKey] = (weeklyData[weekKey] || 0) + t.amount;
     });
   return weeklyData;
 };

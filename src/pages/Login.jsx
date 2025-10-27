@@ -13,16 +13,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
+    <div className="min-h-screen flex items-center justify-center bg-white">
       <div className="max-w-md w-full space-y-8 p-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">💰 Keuangan Harian</h1>
-          <p className="text-blue-200">Masukkan username Anda untuk melanjutkan</p>
+          <h1 className="text-4xl font-bold text-custom-blue mb-2">💰 Keuangan Harian</h1>
+          <p className="text-custom-blue/80">Masukkan username Anda untuk melanjutkan</p>
         </div>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
           <div>
-            <label htmlFor="username" className="block text-sm font-medium text-blue-200 mb-2">
+            <label htmlFor="username" className="block text-sm font-medium text-custom-blue mb-2">
               Username
             </label>
             <input
@@ -30,7 +30,7 @@ const Login = () => {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-4 py-3 bg-white/10 border border-blue-300/30 rounded-lg text-white placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+              className="w-full px-4 py-3 bg-white border border-custom-blue/30 rounded-lg text-custom-blue placeholder-custom-blue/50 focus:outline-none focus:ring-2 focus:ring-custom-blue focus:border-transparent"
               placeholder="Masukkan username Anda"
               required
               autoFocus
@@ -39,13 +39,13 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-900"
+            className="w-full bg-custom-blue hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-custom-blue focus:ring-offset-2 focus:ring-offset-white animate-pulseScale"
           >
             Masuk
           </button>
         </form>
 
-        <div className="text-center text-sm text-blue-300/70">
+        <div className="text-center text-sm text-custom-blue/70">
           <p>Data Anda akan disimpan secara terpisah untuk setiap username</p>
         </div>
       </div>

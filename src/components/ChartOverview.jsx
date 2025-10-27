@@ -1,102 +1,68 @@
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-import { calculateCategoryExpenses, calculateWeeklyExpenses } from '../utils/summaryCalculator';
-import { formatCurrency } from '../utils/formatCurrency';
+import { Link } from 'react-router-dom';
 
 const ChartOverview = ({ transactions }) => {
-  const categoryData = Object.entries(calculateCategoryExpenses(transactions)).map(([category, amount]) => ({
-    name: category,
-    value: amount,
-  }));
-
-  const weeklyData = Object.entries(calculateWeeklyExpenses(transactions)).map(([week, amount]) => ({
-    week: `Minggu ${week}`,
-    amount,
-  }));
-
-  const COLORS = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE'];
+  // Get recent transactions (last 5)
+  const recentTransactions = transactions
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 5);
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-      {/* Pie Chart - Category Expenses */}
-      <div className="card bg-white/10 dark:bg-gray-800/50">
-        <h3 className="text-2xl font-bold mb-6 text-white text-center">🥧 Pengeluaran per Kategori</h3>
-        {categoryData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={350}>
-            <PieChart>
-              <Pie
-                data={categoryData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => percent > 5 ? `${name}\n${(percent * 100).toFixed(0)}%` : ''}
-                outerRadius={100}
-                fill="#8884d8"
-                dataKey="value"
-                stroke="#0000CC"
-                strokeWidth={2}
-              >
-                {categoryData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip
-                formatter={(value) => [formatCurrency(value), 'Total']}
-                contentStyle={{
-                  backgroundColor: '#0000CC',
-                  border: '1px solid #ffffff',
-                  borderRadius: '8px',
-                  color: 'white'
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        ) : (
-          <div className="text-center py-16">
-            <p className="text-white/70 dark:text-gray-300 text-lg">Belum ada data pengeluaran</p>
-          </div>
-        )}
-      </div>
+    <div className="grid grid-cols-1 gap-8">
+      {/* Recent Transactions */}
+      <div className="card bg-white/10 dark:bg-gray-800/50 animate-pulseScale">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-2xl font-bold text-custom-blue">📋 Transaksi Terbaru</h3>
+          <Link
+            to="/report"
+            className="text-custom-blue hover:text-white font-medium text-sm transition-colors"
+          >
+            Lihat Semua →
+          </Link>
+        </div>
 
-      {/* Bar Chart - Weekly Expenses */}
-      <div className="card bg-white/10 dark:bg-gray-800/50">
-        <h3 className="text-2xl font-bold mb-6 text-white text-center">📊 Pengeluaran Mingguan</h3>
-        {weeklyData.length > 0 ? (
-          <ResponsiveContainer width="100%" height={350}>
-            <BarChart data={weeklyData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff30" />
-              <XAxis
-                dataKey="week"
-                stroke="#ffffff"
-                fontSize={12}
-                tick={{ fill: '#ffffff' }}
-              />
-              <YAxis
-                tickFormatter={(value) => formatCurrency(value)}
-                stroke="#ffffff"
-                fontSize={12}
-                tick={{ fill: '#ffffff' }}
-              />
-              <Tooltip
-                formatter={(value) => [formatCurrency(value), 'Pengeluaran']}
-                contentStyle={{
-                  backgroundColor: '#0000CC',
-                  border: '1px solid #ffffff',
-                  borderRadius: '8px',
-                  color: 'white'
-                }}
-              />
-              <Bar
-                dataKey="amount"
-                fill="#0000CC"
-                stroke="#ffffff"
-                strokeWidth={1}
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+        {recentTransactions.length > 0 ? (
+          <div className="space-y-4">
+            {recentTransactions.map((transaction) => (
+              <div
+                key={transaction.id}
+                className="flex items-center justify-between p-4 bg-white/5 dark:bg-gray-700/20 rounded-lg hover:bg-white/10 dark:hover:bg-gray-700/30 transition-colors"
+              >
+                <div className="flex items-center space-x-4">
+                  <div className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                    transaction.type === 'income'
+                      ? 'bg-green-500/20 text-green-400'
+                      : 'bg-red-500/20 text-red-400'
+                  }`}>
+                    {transaction.type === 'income' ? '💰' : '💸'}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-white">{transaction.description}</p>
+                    <p className="text-sm text-white/70">{transaction.category}</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <p className={`font-semibold text-lg ${
+                    transaction.type === 'income' ? 'text-green-400' : 'text-red-400'
+                  }`}>
+                    {transaction.type === 'income' ? '+' : '-'}Rp {transaction.amount.toLocaleString()}
+                  </p>
+                  <p className="text-xs text-white/50">
+                    {new Date(transaction.date).toLocaleDateString('id-ID')}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="text-center py-16">
-            <p className="text-white/70 dark:text-gray-300 text-lg">Belum ada data pengeluaran mingguan</p>
+            <div className="text-6xl mb-4">📝</div>
+            <p className="text-white/70 dark:text-gray-300 text-lg mb-4">Belum ada transaksi</p>
+            <Link
+              to="/add"
+              className="bg-custom-blue text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors inline-block"
+            >
+              Tambah Transaksi Pertama →
+            </Link>
           </div>
         )}
       </div>

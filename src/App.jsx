@@ -13,8 +13,8 @@ function AppContent() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 via-purple-900 to-indigo-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="animate-logo-spin rounded-full h-12 w-12 border-b-2 border-custom-blue"></div>
       </div>
     );
   }

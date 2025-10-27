@@ -13,18 +13,26 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="glass-effect border-b border-white/20 bg-white/10 dark:bg-gray-800/50">
+    <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-20">
-          <div className="flex items-center space-x-8">
-            <h1 className="text-2xl font-bold text-white text-shadow">💰 Keuangan Harian</h1>
-            <div className="hidden md:flex space-x-4">
+        <div className="flex justify-between items-center h-16">
+          <div className="flex items-center space-x-6">
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="text-xl">💰</span>
+              <h1 className="text-lg font-bold text-gray-800">
+                Keuangan Harian
+              </h1>
+            </Link>
+
+            <div className="hidden md:flex space-x-1">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`nav-link ${
-                    location.pathname === item.path ? 'nav-link-active' : 'nav-link-inactive'
+                  className={`px-3 py-2 rounded-lg font-medium transition-colors ${
+                    location.pathname === item.path
+                      ? 'bg-blue-500 text-white'
+                      : 'text-gray-600 hover:text-gray-800 hover:bg-gray-100'
                   }`}
                 >
                   {item.label}
@@ -32,25 +40,29 @@ const Navbar = () => {
               ))}
             </div>
           </div>
+
           <div className="flex items-center space-x-4">
-            <span className="text-white font-medium">👤 {user?.username}</span>
+            <span className="text-gray-700 font-medium hidden md:block">{user?.username}</span>
             <button
               onClick={logout}
-              className="btn-secondary text-sm"
+              className="bg-red-500 text-white px-3 py-2 rounded-lg font-medium hover:bg-red-600 transition-colors"
             >
-              🚪 Logout
+              🚪 Keluar
             </button>
           </div>
         </div>
+
         {/* Mobile menu */}
-        <div className="md:hidden pb-6">
-          <div className="flex space-x-3 overflow-x-auto">
+        <div className="md:hidden pb-3">
+          <div className="flex space-x-1 overflow-x-auto">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`nav-link whitespace-nowrap ${
-                  location.pathname === item.path ? 'nav-link-active' : 'nav-link-inactive'
+                className={`px-3 py-2 rounded-lg font-medium whitespace-nowrap transition-colors ${
+                  location.pathname === item.path
+                    ? 'bg-blue-500 text-white'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
                 {item.icon} {item.label.split(' ')[1]}
